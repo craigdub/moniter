@@ -1,0 +1,25 @@
+Metadata-Version: 1.0
+Name: dashboard
+Version: 0.0
+Summary: dashboard
+Home-page: UNKNOWN
+Author: UNKNOWN
+Author-email: UNKNOWN
+License: UNKNOWN
+Description: dashboard README
+        
+        
+        
+        
+        
+        0.0
+        ---
+        
+        - Initial version
+        
+Keywords: web pyramid pylons
+Platform: UNKNOWN
+Classifier: Programming Language :: Python
+Classifier: Framework :: Pylons
+Classifier: Topic :: Internet :: WWW/HTTP
+Classifier: Topic :: Internet :: WWW/HTTP :: WSGI :: Application

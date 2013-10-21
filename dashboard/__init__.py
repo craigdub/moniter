@@ -19,5 +19,8 @@ def main(global_config, **settings):
     config.add_view('dashboard.views.my_view',
                     context='dashboard.models.MyModel', 
                     renderer="mytemplate.jinja2")
+    config.scan('dashboard')
+    config.add_route('home', '/')
+    config.add_route('socket_io', 'socket.io/*remaining')
 
     return config.make_wsgi_app()

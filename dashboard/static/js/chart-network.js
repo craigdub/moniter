@@ -18,7 +18,7 @@ function init_second_network(socket) {
             width: 400
         },
         title: {
-            text: 'Network Stats interval 1 second',
+            text: 'Network Packets Sent/Recieved',
             style: {
                 color: '#333',
                 fontSize: '1.1em'

@@ -19,7 +19,7 @@ function init_second_cpu(socket) {
             width: 400
 	    },
 	    title: {
-	        text: 'Cpu Stats interval 1 second',
+	        text: 'Cpu Load',
 	        style: {
 	            color: '#333',
 	            fontSize: '1.1em'

@@ -28,11 +28,7 @@ function init_second_cpu(socket) {
 	        verticalAlign: 'bottom'
 	    },
 	    legend: {
-	        enabled: true,
-	        borderWidth: 0,
-	        layout: 'vertical',
-	        verticalAlign: 'middle',
-	        align: 'left'
+	        enabled: false
 	    },
 	    rangeSelector: {
 	        enabled: false,

@@ -27,11 +27,7 @@ function init_second_network(socket) {
             verticalAlign: 'bottom'
         },
         legend: {
-            enabled: true,
-            borderWidth: 0,
-            layout: 'vertical',
-            verticalAlign: 'middle',
-            align: 'left'
+            enabled: false
         },
         plotOptions: {
             line: {

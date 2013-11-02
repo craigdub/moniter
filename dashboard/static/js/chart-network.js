@@ -80,6 +80,9 @@ function init_second_network(socket) {
             }]
         },
         xAxis: {
+            labels: {
+              enabled: false
+            }
         },
         tooltip: {
             pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b><br/>',

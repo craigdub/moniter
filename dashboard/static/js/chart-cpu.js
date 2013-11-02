@@ -74,6 +74,9 @@ function init_second_cpu(socket) {
 	        }]
 	    },
 	    xAxis: {
+            labels: {
+              enabled: false
+            }
 	    },
 	    tooltip: {
 	        pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}%</b><br/>',

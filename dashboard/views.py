@@ -13,27 +13,35 @@ _ = TranslationStringFactory('dashboard')
 
 @view_config(route_name='home', renderer="mytemplate.jinja2")
 def my_view(request):
-	return {'project': 'dashboard'}
+    return {'project': 'dashboard'}
 
-class CPU_Stats(BaseNamespace):
-	"""Socket CPU Namespace Goodness
-	"""
-	def on_init(self):
-		self.spawn(self.second_cpu)
 
-	def second_cpu(self):
-		while self.socket.state == self.socket.STATE_CONNECTED:
-			stat_cpu = psutil.cpu_percent()	
-			self.emit('second_cpu', stat_cpu)
-			print stat_cpu
-			sleep(1)
+class View(BaseNamespace):
+    """Dashboard View
+    """
+    def on_init(self):
+        self.spawn(self.second_cpu)
+        self.spawn(self.second_network)
+
+    def second_cpu(self):
+        while self.socket.state == self.socket.STATE_CONNECTED:
+            stats = psutil.cpu_percent() 
+            self.emit('second_cpu', stats)
+            sleep(1)
+
+    def second_network(self):
+        while self.socket.state == self.socket.STATE_CONNECTED:
+            stats = psutil.network_io_counters(pernic=False)
+            self.emit('second_net_bandwidth', json.dumps(stats._asdict()))
+            sleep(1)
+
 
 @view_config(route_name='socket_io')
 def socketio_service(request):
-	retval = socketio_manage(request.environ,
-		{
-		'': CPU_Stats
-		}, request=request 
-		)
+    retval = socketio_manage(request.environ,
+        {
+        '': View,
+        }, request=request 
+        )
 
-	return Response('')
+    return Response('')

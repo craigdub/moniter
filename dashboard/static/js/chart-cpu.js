@@ -91,10 +91,10 @@ function init_second_cpu(socket) {
 
         var pointColor = 'green';
         if (point > 88) {
-            point = 'orange;'
+            pointColor = 'orange;'
         } 
         else if (point > 94) {
-            point = 'red;'
+            pointColor = 'red;'
         }
 
         if (i > 30) {

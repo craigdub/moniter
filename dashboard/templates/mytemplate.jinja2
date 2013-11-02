@@ -1,40 +1,40 @@
 <html> 
 <head>
-	<title>Cpu Monitor</title>
-	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
-	<meta name="keywords" content="python web application" />
-	<meta name="description" content="pyramid web application" />
-	<link rel="shortcut icon" href="{{request.application_url}}/static/favicon.ico" />
-	<link rel="stylesheet" href="{{request.application_url}}/static/pylons.css" type="text/css" media="screen" charset="utf-8" />
-	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
-	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css">
-	<script src="/static/js/jquery-2.0.3.js"></script>
-	<script src="/static/js/highcharts.js"></script>
-	<script src="/static/js/socket.io.js"></script>
-	<script src="/static/js/chart-cpu.js"></script>
-	<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+    <title>Cpu Monitor</title>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+    <meta name="keywords" content="python web application" />
+    <meta name="description" content="pyramid web application" />
+    <link rel="shortcut icon" href="{{request.application_url}}/static/favicon.ico" />
+    <link rel="stylesheet" href="{{request.application_url}}/static/pylons.css" type="text/css" media="screen" charset="utf-8" />
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css">
+    <script src="/static/js/jquery-2.0.3.js"></script>
+    <script src="/static/js/highcharts.js"></script>
+    <script src="/static/js/socket.io.js"></script>
+    <script src="/static/js/chart-cpu.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
 </head>
 <body>
-	<div id="container">
-		<div class="row">
-			<div class="span12">
-			</div>
-		</div>
-		<div class="row">
-			<div class="span12">
-				<div id="second-cpu"></div>
-			</div>
-		</div>
-	</div>
-	<div id="footer">
-		<div class="footer">© ...</div>
-	</div>
+    <div id="container">
+        <div class="row">
+            <div class="span12">
+            </div>
+        </div>
+        <div class="row">
+            <div class="span12">
+                <div id="second-cpu"></div>
+            </div>
+        </div>
+    </div>
+    <!--<div id="footer">
+        <div class="footer">© ...</div>
+    </div>-->
 </body>
 <script>
-	$(function() {
-		var socket = io.connect();
-		socket.emit('init');
-		init_second_cpu(socket);
-	});
+    $(function() {
+        var socket = io.connect();
+        socket.emit('init');
+        init_second_cpu(socket);
+    });
 </script>
 </html>

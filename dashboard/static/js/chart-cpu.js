@@ -14,7 +14,9 @@ function init_second_cpu(socket) {
 	        minWidth: 20
 	    },
 	    chart: {
-	        height: 300
+            type: 'column',
+	        height: 100,
+            width: 400
 	    },
 	    title: {
 	        text: 'Cpu Stats interval 1 second',
@@ -63,6 +65,7 @@ function init_second_cpu(socket) {
 	        inputDateFormat: '%Y-%m-%d'
 	    },
 	    yAxis: {
+            title: '',
 	        min: 0,
 	        plotLines: [{
 	            value: 0,
@@ -82,8 +85,23 @@ function init_second_cpu(socket) {
 	    series: [{'name':'cpu', data:[]}]
 	});
 
-	socket.on('second_cpu', function(msg) {
+    var i = 0;
+	socket.on('second_cpu', function(point) {
 		var chart = $('#second-cpu').highcharts();
-		chart.series[0].addPoint(msg);
+
+        var pointColor = 'green';
+        if (point > 88) {
+            point = 'orange;'
+        } 
+        else if (point > 94) {
+            point = 'red;'
+        }
+
+        if (i > 30) {
+            chart.series[0].addPoint({y: point, color: pointColor}, true, true);
+            return;
+        }
+        chart.series[0].addPoint({y: point, color: pointColor});
+        i++;
 	});
 }

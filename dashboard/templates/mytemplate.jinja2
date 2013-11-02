@@ -1,43 +1,75 @@
 <html> 
 <head>
-    <title>Cpu Monitor</title>
-    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
-    <meta name="keywords" content="python web application" />
-    <meta name="description" content="pyramid web application" />
-    <link rel="shortcut icon" href="{{request.application_url}}/static/favicon.ico" />
-    <link rel="stylesheet" href="{{request.application_url}}/static/pylons.css" type="text/css" media="screen" charset="utf-8" />
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css">
-    <script src="/static/js/jquery-2.0.3.js"></script>
-    <script src="/static/js/highcharts.js"></script>
-    <script src="/static/js/socket.io.js"></script>
-    <script src="/static/js/chart-cpu.js"></script>
-    <script src="/static/js/chart-network.js"></script>
-    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+	<title>Cpu Monitor</title>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+	<meta name="keywords" content="python web application" />
+	<meta name="description" content="pyramid web application" />
+	<link rel="shortcut icon" href="{{request.application_url}}/static/favicon.ico" />
+	<link rel="stylesheet" href="{{request.application_url}}/static/pylons.css" type="text/css" media="screen" charset="utf-8" />
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css">
+	<script src="/static/js/jquery-2.0.3.js"></script>
+	<script src="/static/js/highcharts.js"></script>
+	<script src="/static/js/socket.io.js"></script>
+	<script src="/static/js/chart-cpu.js"></script>
+	<script src="/static/js/chart-network.js"></script>
+	<script src="/static/js/page-load.js"></script>
+	<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
 </head>
 <body>
-    <div id="container">
-        <div class="row">
-            <div class="span12">
-            </div>
-        </div>
-        <div class="row">
-            <div class="span12">
-                <div id="second-cpu"></div>
-                <div id="second-network"></div>
-            </div>
-        </div>
-    </div>
-    <!--<div id="footer">
-        <div class="footer">© ...</div>
-    </div>-->
-</body>
-<script>
-    $(function() {
-        var socket = io.connect();
-        socket.emit('init');
-        init_second_cpu(socket);
-        init_second_network(socket);
-    });
-</script>
-</html>
+	<div id="container">
+		<div class="row">
+			<div class="col-md-12">
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-4">
+				<div id="second-cpu"></div>
+				<div id="second-network"></div>
+			</div>
+			<div class="col-md-8">
+				<form class="form-inline" role="form">
+					<div class="form-group">
+						<input type="url" class="form-control" id="input-url" placeholder="Web site url for page load times">
+					</div>
+					<button type="submit" class="btn btn-default" id="button-page-load" onclick="return false">Monitor</button>
+				</form>
+				<table id="table-page-load" class="table">
+					<thead>
+						<tr>
+							<td>URL</td>
+							<td >Page Load</td>
+						</tr>
+					</thead>
+					<tbody id="tbody-page-load">
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+		<!--<div id="footer">
+			<div class="footer">© ...</div>
+		</div>-->
+	</body>
+	<script>
+	$(function() {
+		function init() {
+			var socket = io.connect();
+			socket.emit('init');
+
+			init_second_cpu(socket);
+			init_second_network(socket);
+		}
+
+		init();
+
+		$('#button-page-load').click(function() {
+			var socket = io.connect();
+			var url = $('#input-url').val();
+			
+			$('#tbody-page-load').append(viewPageLoad(url));
+			getPageLoad(socket, url);
+		});
+	});
+	</script>
+	</html>

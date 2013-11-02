@@ -33,6 +33,13 @@ function init_second_network(socket) {
             verticalAlign: 'middle',
             align: 'left'
         },
+        plotOptions: {
+            line: {
+                marker: {
+                    enabled: false
+                }
+            }
+        },
         rangeSelector: {
             enabled: false,
             buttons: [{
@@ -75,7 +82,7 @@ function init_second_network(socket) {
         xAxis: {
         },
         tooltip: {
-            pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}%</b><br/>',
+            pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b><br/>',
             valueDecimals: 2
         },
         navigator: {
@@ -84,20 +91,14 @@ function init_second_network(socket) {
         series: [{'name':'Sent', data:[]}, {'name':'Received', data:[]}]
     });
 
-    var i = 0;
     socket.on('second_net_bandwidth', function(data) {
-        console.log(data);
         var chart = $('#second-network').highcharts();
 
         data = JSON.parse(data);
 
-        if (i > 30) {
-            chart.series[0].addPoint(data.packets_sent, true,true);
-            chart.series[1].addPoint(data.packets_recv, true, true);
-            return;
-        }
-        i++;
-        chart.series[0].addPoint(data.packets_sent, true);
-        chart.series[1].addPoint(data.packets_recv, true);
+        var sshift = chart.series[0].data.length > 40;
+
+        chart.series[0].addPoint(data.packets_sent, true,sshift);
+        chart.series[1].addPoint(data.packets_recv, true, sshift);
     });
 }

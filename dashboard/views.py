@@ -7,7 +7,9 @@ from socketio import socketio_manage
 import json
 import pprint
 import pdb
+import urllib2
 from gevent import sleep
+import time
 
 _ = TranslationStringFactory('dashboard')
 
@@ -35,12 +37,30 @@ class View(BaseNamespace):
             self.emit('second_net_bandwidth', json.dumps(stats._asdict()))
             sleep(1)
 
+    def on_page_load(self, j):
+        self.spawn(self.page_load, j)
+
+    def page_load(self, j):
+        pdb.set_trace()
+        while self.socket.state == self.socket.STATE_CONNECTED:
+            nf = urllib2.urlopen(j['url'])
+            start = time.time()
+            page = nf.read()
+            end = time.time()
+            nf.close()
+
+            load_time = end - start
+
+            self.emit('page_load', {'url': j['url'], 'load_time': load_time})
+
+            sleep(5)
+
 
 @view_config(route_name='socket_io')
 def socketio_service(request):
     retval = socketio_manage(request.environ,
         {
-        '': View,
+        '': View
         }, request=request 
         )
 

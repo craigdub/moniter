@@ -85,23 +85,17 @@ function init_second_cpu(socket) {
 	    series: [{'name':'cpu', data:[]}]
 	});
 
-    var i = 0;
 	socket.on('second_cpu', function(point) {
 		var chart = $('#second-cpu').highcharts();
 
         var pointColor = 'green';
         if (point > 88) {
-            pointColor = 'orange;'
+            pointColor = 'orange';
         } 
         else if (point > 94) {
-            pointColor = 'red;'
+            pointColor = 'red';
         }
-
-        if (i > 30) {
-            chart.series[0].addPoint({y: point, color: pointColor}, true, true);
-            return;
-        }
-        chart.series[0].addPoint({y: point, color: pointColor});
-        i++;
+        var sshift = chart.series[0].data.length > 40;
+        chart.series[0].addPoint({y: point, color: pointColor}, true, sshift);
 	});
 }

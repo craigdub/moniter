@@ -1,4 +1,4 @@
-from myapp.models import Base
+from dashboard.models import Base
 from sqlalchemy import Column
 from sqlalchemy import Unicode
 from sqlalchemy import Integer

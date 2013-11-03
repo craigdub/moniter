@@ -1,6 +1,5 @@
 from pyramid.config import Configurator
 from pyramid_jinja2 import renderer_factory
-from dashboard.models import get_root
 from pyramid.config import Configurator
 from sqlalchemy import engine_from_config
 from sqlalchemy.orm import sessionmaker
@@ -24,7 +23,7 @@ def main(global_config, **settings):
     settings = dict(settings)
     settings.setdefault('jinja2.i18n.domain', 'dashboard')
 
-    config = Configurator(root_factory=get_root, settings=settings)
+    config = Configurator(settings=settings)
     config.add_translation_dirs('locale/')
     config.include('pyramid_jinja2')
 
@@ -34,9 +33,6 @@ def main(global_config, **settings):
     config.add_request_method(db, reify=True)
 
     config.add_static_view('static', 'static')
-    config.add_view('dashboard.views.my_view',
-                    context='dashboard.models.MyModel', 
-                    renderer="mytemplate.jinja2")
     config.scan('dashboard')
     config.add_route('home', '/')
     config.add_route('socket_io', 'socket.io/*remaining')

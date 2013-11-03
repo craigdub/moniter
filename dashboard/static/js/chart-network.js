@@ -81,7 +81,9 @@ function init_second_network(socket) {
             }
         },
         tooltip: {
-            pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b><br/>',
+            formatter: function() {
+                return '<span style="color:' + this.series.color +'">' + this.series.name + '</span>: <b>' + this.y + '</b><br/>';
+            },
             valueDecimals: 2
         },
         navigator: {
@@ -97,7 +99,7 @@ function init_second_network(socket) {
 
         var sshift = chart.series[0].data.length > 40;
 
-        chart.series[0].addPoint(data.packets_sent, true,sshift);
+        chart.series[0].addPoint(data.packets_sent, true, sshift);
         chart.series[1].addPoint(data.packets_recv, true, sshift);
     });
 }

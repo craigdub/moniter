@@ -75,7 +75,9 @@ function init_second_cpu(socket) {
             }
 	    },
 	    tooltip: {
-	        pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}%</b><br/>',
+	        formatter: function() {
+                return '<span style="color:' + this.series.color +'">' + this.series.name + '</span>: <b>' + this.y + '</b><br/>';
+            },
 	        valueDecimals: 2
 	    },
 	    navigator: {

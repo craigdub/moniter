@@ -4,9 +4,9 @@ from sqlalchemy import Unicode
 from sqlalchemy import Integer
 
 class PageLoad(Base):
-    __tablename__ = 'models'
+    __tablename__ = 'page_load'
     id = Column(Integer, primary_key=True)
-    name = Column(Unicode(255), unique=True)
+    url = Column(Unicode(255), unique=True)
 
-    def __init__(self, name):
-        self.name = name
+    def __init__(self, url):
+        self.url = url

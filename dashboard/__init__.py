@@ -3,6 +3,7 @@ from pyramid_jinja2 import renderer_factory
 from pyramid.config import Configurator
 from sqlalchemy import engine_from_config
 from sqlalchemy.orm import sessionmaker
+from dashboard.models import initialize_sql
 
 def db(request):
     maker = request.registry.dbmaker
@@ -27,13 +28,16 @@ def main(global_config, **settings):
     config.add_translation_dirs('locale/')
     config.include('pyramid_jinja2')
 
+    config.scan('dashboard')
+
     #mysql
     engine = engine_from_config(settings, prefix='sqlalchemy.')
     config.registry.dbmaker = sessionmaker(bind=engine)
     config.add_request_method(db, reify=True)
 
+    initialize_sql(engine)
+
     config.add_static_view('static', 'static')
-    config.scan('dashboard')
     config.add_route('home', '/')
     config.add_route('socket_io', 'socket.io/*remaining')
 

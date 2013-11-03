@@ -20,7 +20,6 @@
 	<div id="container">
 		<div class="row">
 			<div class="col-md-12">
-				{{ project }}
 			</div>
 		</div>
 		<div class="row">
@@ -43,6 +42,12 @@
 						</tr>
 					</thead>
 					<tbody id="tbody-page-load">
+					{% for p in page_loads %}
+						<tr>
+							<td>{{ p.url }}</td>
+							<td>...</td>
+						</tr>
+					{% endfor %}
 					</tbody>
 				</table>
 			</div>

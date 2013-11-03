@@ -1,9 +1,10 @@
 from pyramid.i18n import TranslationStringFactory
-import psutil
 from pyramid.response import Response
 from pyramid.view import view_config
 from socketio.namespace import BaseNamespace
 from socketio import socketio_manage
+from dashboard.models.page_load import PageLoad
+import psutil
 import json
 import pprint
 import pdb
@@ -15,7 +16,8 @@ _ = TranslationStringFactory('dashboard')
 
 @view_config(route_name='home', renderer="mytemplate.jinja2")
 def my_view(request):
-    return {'project': 'dashboard'}
+    page_loads = request.db.query(PageLoad).all()
+    return {'project': 'dashboard', 'page_loads': page_loads}
 
 
 class View(BaseNamespace):
@@ -38,10 +40,14 @@ class View(BaseNamespace):
             sleep(1)
 
     def on_page_load(self, j):
+        #Insert url in db
+        pl = PageLoad(j['url'])
+        self.request.db.add(pl)
+        self.request.db.commit()
+
         self.spawn(self.page_load, j)
 
     def page_load(self, j):
-        pdb.set_trace()
         while self.socket.state == self.socket.STATE_CONNECTED:
             nf = urllib2.urlopen(j['url'])
             start = time.time()
